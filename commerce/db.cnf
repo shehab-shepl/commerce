@@ -1,0 +1,6 @@
+# my.cnf
+[client]
+database = newcommerce
+user = root
+password = 01068428392
+default-character-set = utf8
