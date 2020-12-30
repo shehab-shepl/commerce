@@ -1,0 +1,16 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+{% load static %}
+
+<form method='post' enctype='multipart/form-data' >
+    {{form}}
+
+    {% csrf_token %}
+
+    <button type='submit' class='btn-btn-primary'> save post </button>
+
+</form>
+
+{% endblock %}

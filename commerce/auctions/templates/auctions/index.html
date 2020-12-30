@@ -3,5 +3,25 @@
 {% block body %}
     <h2>Active Listings</h2>
 
-    TODO
+{% load static %}
+<!doctype html>
+<p>this our main page</p>
+
+{% for post in all_posts %}
+
+
+
+<P><a href="{{post.id}}">{{post.title}}</a></P>
+{% if post.img %}
+<img src="{{post.img.url}}" class="img-responsive ">
+{% else %}
+<P> not found</P>
+{% endif %}
+
+{%endfor%}
+<br>
+
+<P><a href="createlist">add new post</a></P> 
+
+
 {% endblock %}

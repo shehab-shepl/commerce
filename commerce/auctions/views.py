@@ -1,14 +1,26 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render ,redirect
 from django.urls import reverse
 
-from .models import User
+from .models import *
+
+from django import forms
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title','description','img','category','active','seller','starting_bid']
+
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    all_posts = Post.objects.all()
+    context = {
+        'all_posts':all_posts,
+    }
+    return render(request,'auctions/index.html',context)
 
 
 def login_view(request):
@@ -61,3 +73,34 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "auctions/register.html")
+
+
+
+
+
+
+def watch_list(request):
+    pass
+
+
+def categories(request):
+    pass
+    
+
+def create_list(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST,request.FILES)
+        if form.is_valid():
+            new_form = form.save(commit=False)
+            new_form.user_id = request.user
+            new_form.save()
+        return redirect ('/')
+
+    else:
+        form = PostForm()
+    context = {
+        "form":form,
+    }
+    return render(request,'auctions/create.html',context)
+
+

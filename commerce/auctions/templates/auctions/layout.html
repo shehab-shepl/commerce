@@ -22,8 +22,21 @@
             </li>
             {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                    <a class="nav-link" href="{% url 'createlist' %}">create post</a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'categories' %}">categories</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'watchlist' %}">watch list</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}"> Log Out</a>
+                </li>
+
             {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'login' %}">Log In</a>
@@ -38,3 +51,5 @@
         {% endblock %}
     </body>
 </html>
+
+
