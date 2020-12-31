@@ -1,9 +1,11 @@
 {% extends "auctions/layout.html" %}
 
+{% load static %}
+
 {% block body %}
     <h2>Active Listings</h2>
 
-{% load static %}
+
 <!doctype html>
 <p>this our main page</p>
 
@@ -14,8 +16,11 @@
 <P><a href="{{post.id}}">{{post.title}}</a></P>
 {% if post.img %}
 <img src="{{post.img.url}}" class="img-responsive ">
+
+
+
 {% else %}
-<P> not found</P>
+<img src="https://recyclingbalers.s3.amazonaws.com/image/No%20Image.jpg" class="img-responsive ">
 {% endif %}
 
 {%endfor%}
