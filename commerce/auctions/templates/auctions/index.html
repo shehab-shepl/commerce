@@ -3,79 +3,39 @@
 {% load static %}
 
 {% block body %}
-    <h2>Active Listings</h2>
-    <div class="container-fluid">
+    <h2 style="color:gray;">Active Listings</h2>
+    <div class="container">
         <main class="tm-main">            
             <div class="row tm-row">
                 {% for post in all_posts %}
-                <article class="col-12 col-md-6 tm-post">
+                <article height='100px' class="col-12 col-md-6 tm-post">
                     <hr class="tm-hr-primary">
                     <a href="{{post.id}}" class="effect-lily tm-post-link tm-pt-60">
-                        <div class="tm-post-link-inner">
+
+                        <div class="card" style="width: 18rem; height: auto;">
                             {% if post.img %}
-                            <img src="{{post.img.url}}" alt="Image" class="img-fluid"> 
+                            <img style="height:270px;" class="card-img-top" src="{{post.img.url}}" alt="Card image cap">
                             {% else %}
-                            <img src="https://recyclingbalers.s3.amazonaws.com/image/No%20Image.jpg" class="img-responsive ">
+                            <img style="height:270px;" class="card-img-top" src="https://recyclingbalers.s3.amazonaws.com/image/No%20Image.jpg" >
                             {% endif %}    
 
+                            <div class="card-body">
+                                <h5 class="card-title">{{post.title}}</h5>
+                            </div>    
+                    </a>
+                            <p class="card-text">start bid: {{post.starting_bid}}</p>
+                            <p class="card-text">current bid: {{post.starting_bid}}</p>
+                            <p class="card-text" >seller: {{post.seller}}</p>
+                            <p class="card-text" style="color:red;" ><small  >created in : {{post.created}}</small></p>
                         </div>
-                        <span class="position-absolute tm-new-badge">active</span>
-                        <h2 class="tm-pt-30 tm-color-primary tm-post-title">{{post.title}}</h2>
-                    </a>                    
-                    <p class="tm-pt-30">
-                        {{post.description}}
-                    </p>
-                    <div class="d-flex justify-content-between tm-pt-45">
-                        <span class="tm-color-primary">{{post.created}}</span>
-                        <span class="tm-color-primary">first bid:{{post.starting_bid}}</span>
-                        <span class="tm-color-primary">seller:{{post.seller}}</span>
-                    </div>
                     <hr>
                     <div class="d-flex justify-content-between">
                         <span>36 comments</span>
-                        <span>by Admin Nat</span>
                     </div>
                 </article>
                 {%endfor%}
             </div>
-            <div class="row tm-row tm-mt-100 tm-mb-75">
-                <div class="tm-prev-next-wrapper">
-                    <a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next disabled tm-mr-20">Prev</a>
-                    <a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next">Next</a>
-                </div>
-                <div class="tm-paging-wrapper">
-                    <span class="d-inline-block mr-3">Page</span>
-                    <nav class="tm-paging-nav d-inline-block">
-                        <ul>
-                            <li class="tm-paging-item active">
-                                <a href="#" class="mb-2 tm-btn tm-paging-link">1</a>
-                            </li>
-                            <li class="tm-paging-item">
-                                <a href="#" class="mb-2 tm-btn tm-paging-link">2</a>
-                            </li>
-                            <li class="tm-paging-item">
-                                <a href="#" class="mb-2 tm-btn tm-paging-link">3</a>
-                            </li>
-                            <li class="tm-paging-item">
-                                <a href="#" class="mb-2 tm-btn tm-paging-link">4</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>                
-            </div>            
-            <footer class="row tm-row">
-                <hr class="col-12">
-                <div class="col-md-6 col-12 tm-color-gray">
-                    .
-                </div>
-                <div class="col-md-6 col-12 tm-color-gray tm-copyright">
-                    .
-                </div>
-            </footer>
-        </main>
-    </div>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/templatemo-script.js"></script>
+
 
 {% endblock %}
 
