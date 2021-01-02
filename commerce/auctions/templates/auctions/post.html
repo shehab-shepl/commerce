@@ -1,0 +1,100 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+
+    <div style=" text-align:center;"  >
+        
+        {%if post.img%}
+        <div >
+               <img style="height:350px; width:350px; text-align:center;" src=" {{post.img.url}}" >
+        </div>
+        {%else%}
+        <div>NO PHOTOS</div>
+        {%endif%}
+        <div>
+            <div >
+            <h4  style=" color:DodgerBlue;">{{post.title}}</h4>
+            </div>
+            <div >
+                <p><i style=" color:DodgerBlue;">category</i> : <i>{{post.category}}</i></p>
+            
+            </div>
+            <div >
+                <i><p>{{post.description}}</p></i>
+            </div>
+
+            <div >
+                <p><i style=" color:DodgerBlue;">seller</i> : <i>{{post.seller}}</i></p>
+            </div>
+
+            <div>
+                <div >
+                <p><i style=" color:DodgerBlue;">first Bid</i> : <i>{{post.starting_bid}}</i></p>
+                </div>
+            
+                <div >
+                    <p><i style=" color:DodgerBlue;">current Bid</i> : <i>x</i></p>
+                </div>
+                <div >
+                    <i><small> <p style=" color:red;"> created in :{{post.created}}</p>  </small> </i>
+                </div>
+                <br>
+                <div style=" left:450px;">
+                <b style="color:DodgerBlue;">Enter your Bid </b> 
+                </div>
+                <form style="width:300px; left:380px;" class="input-group"  action="{% url 'addbid' post.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="text" placeholder="enter Bid" name="newbid" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+                    <span class="input-group-text">$</span>
+                    <span class="input-group-text">0.00</span>
+                    <input class="btn btn-primary"  type="submit" value="save your Bid">
+                </form>
+
+
+                
+                <br> <br> 
+                <form style="width:450px; left:300px;"  class="input-group" action="{% url 'addcomment' post.id %}" method="POST">
+                    {% csrf_token %}
+                    <span style=" color:DodgerBlue;" class="input-group-text">comment</span>
+                    <textarea class="form-control" name="newcomment" aria-label="With textarea"></textarea>
+                    <input class="btn btn-primary" type="submit" value="send">
+                </form>               
+            </div>
+            
+            
+            <div >
+            
+            </div>
+        </div>
+         <br> 
+    </div>
+
+
+    {% if comments %}
+        <div>
+            {%for comment in comments%}
+
+                <article  class="col-12 col-md-6 tm-post">
+                    <hr  class="tm-hr-primary">
+                        <div><i style="color:Gray;">by : {{comment.user_id}}</i></div>
+                        {{comment.comment}}
+                        <div> <i><small style="color:red;">created  : {{comment.created}}</small> </i></div>
+                    <hr>
+                </article>
+
+
+            
+            {%endfor%}
+        </div>
+    {%else%}
+    <div><i style="color:red;">No comments on this post</i></div>
+    {%endif%}
+
+
+
+
+{% endblock %}
+
+
+

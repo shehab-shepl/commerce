@@ -77,6 +77,55 @@ def register(request):
 
 
 
+def add_comment(request,post_id):
+    
+        new_comment = comment()
+        new_comment.comment = request.POST["newcomment"]
+        new_comment.post_id = Post.objects.get(id=post_id)
+        new_comment.user_id = request.user
+        new_comment.save()
+        post = Post.objects.get(id=post_id)
+        comments = comment.objects.filter(post_id=post_id)
+
+        context = {
+            'post' :post ,
+            'comments' :comments
+        }
+
+        return render(request,'auctions/post.html',context)
+
+
+
+
+
+def add_bid(request,post_id):
+
+    newbid = request.POST["newbid"]
+    allbids =  comment.objects.filter(post_id=post_id)
+    if len(allbids)=0:
+        comments = comment.objects.filter(post_id=post_id)
+        post = Post.objects.get(id=post_id)
+        if newbid <= post.starting_bid:
+            message = "enter new bid bigger than the current"
+            context = {
+                'message':message,
+                'post' :post ,
+                'comments' :comments
+            }
+            return render(request,'auctions/post.html',context)
+
+
+            
+        
+
+
+
+    new_bid = bid()
+    new_bid.post_id = Post.objects.get(id=post_id)
+    new_bid.user_id = request.user
+    new_bid.bid = newbid
+    new_bid.save()
+    
 
 
 def watch_list(request):
@@ -104,3 +153,13 @@ def create_list(request):
     return render(request,'auctions/create.html',context)
 
 
+def post(request, id):
+    post = Post.objects.get(id=id)
+    comments = comment.objects.filter(post_id=id)
+
+    context = {
+        'post' :post ,
+        'comments' :comments
+    }
+
+    return render(request,'auctions/post.html',context)

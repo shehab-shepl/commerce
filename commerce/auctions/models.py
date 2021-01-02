@@ -38,3 +38,6 @@ class bid (models.Model):
     created = models.DateTimeField(default=datetime.datetime.now())
 
 
+class Watchlist(models.Model):
+    user_id = models.ForeignKey(User , on_delete=models.CASCADE )
+    post_id = models.ForeignKey(Post , on_delete=models.CASCADE )
