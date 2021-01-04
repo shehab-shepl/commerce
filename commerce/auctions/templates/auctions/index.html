@@ -10,6 +10,7 @@
                 {% for post in all_posts %}
                 <article height='100px' class="col-12 col-md-6 tm-post">
                     <hr  class="tm-hr-primary">
+                    {% if user.is_authenticated %}
                     <a href="{{post.id}}" class="effect-lily tm-post-link tm-pt-60">
 
                         <div class="card" style="width: 18rem; height: auto;">
@@ -23,6 +24,21 @@
                                 <h5 class="card-title">{{post.title}}</h5>
                             </div>    
                     </a>
+                    {%else%}
+                    <a href="{{register}}" class="effect-lily tm-post-link tm-pt-60">
+
+                        <div class="card" style="width: 18rem; height: auto;">
+                            {% if post.img %}
+                            <img style="height:270px;" class="card-img-top" src="{{post.img.url}}" alt="Card image cap">
+                            {% else %}
+                            <img style="height:270px;" class="card-img-top" src="https://recyclingbalers.s3.amazonaws.com/image/No%20Image.jpg" >
+                            {% endif %}    
+
+                            <div class="card-body">
+                                <h5 class="card-title">{{post.title}}</h5>
+                            </div>    
+                    </a>
+                    {%endif%}
                             <p class="card-text">start bid: {{post.starting_bid}}</p>
                             <p class="card-text">current bid: {{post.starting_bid}}</p>
                             <p class="card-text" >seller: {{post.seller}}</p>

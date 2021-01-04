@@ -202,13 +202,26 @@ def post(request, id):
     post = Post.objects.get(id=id)
     comments = comment.objects.filter(post_id=id)
     currentbid = bid.objects.get(post_id=id)
-    
     added = Watchlist.objects.filter(post_id = id, user_id = request.user)
+
+    close_bid = False
+    if post.user_id == request.user :
+        close_bid = True
     context = {
+        'close_bid' : close_bid,
         'post' :post ,
         'comments' :comments,
         'currentbid' : currentbid,
-        'added':added
+        'added':added,
+        'winner' : currentbid.user_id
     }
 
     return render(request,'auctions/post.html',context)
+
+
+def closebid(request, post_id):
+    final_price = bid.objects.get(post_id=post_id)
+    active_post = Post.objects.get(id = post_id)
+    active_post.active = False
+    active_post.save()
+    return redirect ('/')

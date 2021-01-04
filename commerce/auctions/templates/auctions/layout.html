@@ -19,6 +19,7 @@
         <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
     </head>
     <body>
+    
         <h1 style="color:Orange;" >Auctions</h1>
         <div>
             {% if user.is_authenticated %}
@@ -33,15 +34,15 @@
             </li>
             {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'createlist' %}">create post</a>
+                    <a class="nav-link" href="{% url 'createlist' %}">Create post</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'categories' %}">categories</a>
+                    <a class="nav-link" href="{% url 'categories' %}">Categories</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'watchlist' %}">watch list</a>
+                    <a class="nav-link" href="{% url 'watchlist' %}">Watch list</a>
                 </li>
 
                 <li class="nav-item">

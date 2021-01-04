@@ -46,6 +46,7 @@
                     <i><small> <p style=" color:red;"> created in :{{post.created}}</p>  </small> </i>
                 </div>
                 <br>
+                {%if post.active%}
                 <div style=" left:450px;">
                 <b style="color:DodgerBlue;">Enter your Bid </b> 
                 </div>
@@ -56,7 +57,11 @@
                     <span class="input-group-text">0.00</span>
                     <input class="btn btn-primary"  type="submit" value="save your Bid">
                 </form>
-
+                {%else%}
+                <div style=" left:450px;">
+                <b style="color:DodgerBlue;">Post is closed and the winner is {{winner}}</b> 
+                </div>
+                {%endif%}
 
                 
                 <br> <br> 
@@ -67,13 +72,23 @@
                     <input class="btn btn-primary" type="submit" value="send">
                 </form>               
             </div>
-                <br><br>   
+                <br><br> 
+                <!-- if user who make post and the user is signed the same user can close post -->
+            {%if close_bid%}
+
+            {%if post.active%}
+            <a href="{% url 'closebid' post.id %}" class="btn btn-danger btn-lg" name="remove">Close bid</a>
+            {%endif%}
+
+            {%else%} 
+
             {% if added %}
             <!-- <input type="button" class="btn btn-danger btn-lg" name="remove" placeholder="Remove from Watchlist"> -->
             <a href="{% url 'addtowatchlist' post.id %}" class="btn btn-danger btn-lg" name="remove">Remove from Watchlist</a>
             {% else %}
             <!-- <input type="button" class="btn btn-success btn-lg" name="addto" placeholder="Add to Watchlist"> -->
             <a href="{% url 'addtowatchlist' post.id %}" class="btn btn-success btn-lg" name="addto">Add to Watchlist</a>
+            {% endif %}
             {% endif %}
             
             
