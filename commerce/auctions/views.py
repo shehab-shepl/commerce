@@ -87,7 +87,14 @@ def add_comment(request,post_id):
         post = Post.objects.get(id=post_id)
         comments = comment.objects.filter(post_id=post_id)
 
+
+        close_bid = False
+        if post.user_id == request.user :
+            close_bid = True
+
+
         context = {
+            'close_bid' : close_bid,
             'post' :post ,
             'comments' :comments
         }
@@ -104,6 +111,10 @@ def add_bid(request,post_id):
     comments = comment.objects.filter(post_id=post_id)
     current_bid =  bid.objects.get(post_id=post_id)
     
+    close_bid = False
+    if post.user_id == request.user :
+        close_bid = True
+
     newbid = request.POST["newbid"]
     if int((current_bid).bid) < int(newbid):
         current_bid.delete()
@@ -120,6 +131,7 @@ def add_bid(request,post_id):
         msg_type= "danger"
         updated_bid = current_bid
     context = {
+        'close_bid' : close_bid,
         "msg_type":msg_type ,
         'message':message,
         'post' :post ,
@@ -181,6 +193,7 @@ def create_list(request):
         if form.is_valid():
             new_form = form.save(commit=False)
             new_form.user_id = request.user
+            new_form.active = True
             new_form.save()
 
         current_bid = bid()
@@ -203,6 +216,8 @@ def post(request, id):
     comments = comment.objects.filter(post_id=id)
     currentbid = bid.objects.get(post_id=id)
     added = Watchlist.objects.filter(post_id = id, user_id = request.user)
+
+    
 
     close_bid = False
     if post.user_id == request.user :

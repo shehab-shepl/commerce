@@ -46,7 +46,7 @@
                     <i><small> <p style=" color:red;"> created in :{{post.created}}</p>  </small> </i>
                 </div>
                 <br>
-                {%if post.active%}
+                <!-- -->{%if post.active%}
                 <div style=" left:450px;">
                 <b style="color:DodgerBlue;">Enter your Bid </b> 
                 </div>
@@ -57,11 +57,11 @@
                     <span class="input-group-text">0.00</span>
                     <input class="btn btn-primary"  type="submit" value="save your Bid">
                 </form>
-                {%else%}
+                 <!-- -->{%else%}
                 <div style=" left:450px;">
                 <b style="color:DodgerBlue;">Post is closed and the winner is {{winner}}</b> 
                 </div>
-                {%endif%}
+                 <!-- -->{%endif%}
 
                 
                 <br> <br> 
@@ -76,9 +76,9 @@
                 <!-- if user who make post and the user is signed the same user can close post -->
             {%if close_bid%}
 
-            {%if post.active%}
+            <!--{%if post.active%} --> 
             <a href="{% url 'closebid' post.id %}" class="btn btn-danger btn-lg" name="remove">Close bid</a>
-            {%endif%}
+            <!--{%endif%} -->
 
             {%else%} 
 
