@@ -17,6 +17,7 @@ class Post (models.Model):
     created = models.DateTimeField(default=datetime.datetime.now())
     active = models.BooleanField(default=True)
     seller = models.CharField(max_length=50)
+    mobile = models.IntegerField(null=True ,blank=True ,default=0)
     starting_bid = models.IntegerField()
     def __str__(self):
         return f"{self.title}&{self.description}"
