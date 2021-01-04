@@ -1,0 +1,34 @@
+{% extends "auctions/layout.html" %}
+
+{% load static %}
+
+{% block body %}
+    <h2 style="color:gray;">Categories</h2>
+    <div class="container">
+        <main class="tm-main">            
+            <div class="row tm-row">
+                {% for category in categories %}
+                    <article height='100px' class="col-12 col-md-6 tm-post">
+                        <hr  class="tm-hr-primary">
+                            <a href="{{category}}" class="effect-lily tm-post-link tm-pt-60">
+
+                                <div class="card" style="width: 18rem; height: auto;">
+                                
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{category}}</h5>
+                                    </div>
+                                </div>    
+                            </a>
+                        </hr>
+                        
+                    </article>
+                    <br>.
+              
+                {%endfor%}
+            </div>        
+        </main > 
+    </div>
+        
+     
+{% endblock %}
+

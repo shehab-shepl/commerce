@@ -12,7 +12,9 @@ urlpatterns = [
     path("addcomment/<int:post_id>", views.add_comment, name="addcomment"),
     path("addbid/<int:post_id>", views.add_bid, name="addbid"),
     path("createlist", views.create_list, name="createlist"),
-    path("<int:id>",views.post ,name='post')
+    path("addtowatchlist/<int:post_id>", views.addtowatchlist, name="addtowatchlist"),
+    path("<int:id>",views.post ,name='post'),
+    path("<str:category>",views.category ,name='category')
 
 
 ]

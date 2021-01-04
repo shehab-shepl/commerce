@@ -100,41 +100,80 @@ def add_comment(request,post_id):
 
 def add_bid(request,post_id):
 
-    newbid = request.POST["newbid"]
-    allbids =  comment.objects.filter(post_id=post_id)
-    if len(allbids)=0:
-        comments = comment.objects.filter(post_id=post_id)
-        post = Post.objects.get(id=post_id)
-        if newbid <= post.starting_bid:
-            message = "enter new bid bigger than the current"
-            context = {
-                'message':message,
-                'post' :post ,
-                'comments' :comments
-            }
-            return render(request,'auctions/post.html',context)
-
-
-            
-        
-
-
-
-    new_bid = bid()
-    new_bid.post_id = Post.objects.get(id=post_id)
-    new_bid.user_id = request.user
-    new_bid.bid = newbid
-    new_bid.save()
+    post = Post.objects.get(id=post_id)
+    comments = comment.objects.filter(post_id=post_id)
+    current_bid =  bid.objects.get(post_id=post_id)
     
+    newbid = request.POST["newbid"]
+    if int((current_bid).bid) < int(newbid):
+        current_bid.delete()
+        new_bid = bid()
+        new_bid.bid = newbid
+        new_bid.post_id = Post.objects.get(id=post_id)
+        new_bid.user_id = request.user
+        new_bid.save() 
+        updated_bid = bid.objects.get(post_id=post_id)
+        message = "your bid saved"
+        msg_type = "success"
+    else:
+        message = "enter new bid bigger than the current"
+        msg_type= "danger"
+        updated_bid = current_bid
+    context = {
+        "msg_type":msg_type ,
+        'message':message,
+        'post' :post ,
+        'comments' :comments,
+        'currentbid' : updated_bid
+    }
+    return render(request,'auctions/post.html',context)
+
+
+
+
+
+def addtowatchlist(request ,post_id):
+    added = Watchlist.objects.filter(post_id = post_id, user_id = request.user)
+    if added:
+        added.delete()
+    else:
+        new_watch= Watchlist()
+        new_watch.user_id = request.user
+        new_watch.post_id = Post.objects.get(id=post_id)
+        new_watch.save()
+    return redirect ('/')
+
+
 
 
 def watch_list(request):
-    pass
+    watchlist = Watchlist.objects.filter(user_id = request.user)
+    context = {
+        'watchlist' : watchlist
+    }
+    #return redirect ('/')
+    return render(request,'auctions/watchlist.html',context)
+
 
 
 def categories(request):
-    pass
+    categories = ["Fashion","Tools","Toys","Electronics","Accessories","Books"]
+    context = {
+        'categories' : categories
+    }
+    #return redirect ('/')
+    return render(request,'auctions/categories.html',context)
+
+
+def category(request,category):
+
+    all_posts = Post.objects.filter(category = category)
+
+    context = {
+        'all_posts' : all_posts
+    }
     
+    return render(request,'auctions/index.html',context)
 
 def create_list(request):
     if request.method == 'POST':
@@ -143,6 +182,12 @@ def create_list(request):
             new_form = form.save(commit=False)
             new_form.user_id = request.user
             new_form.save()
+
+        current_bid = bid()
+        current_bid.bid = new_form.starting_bid
+        current_bid.post_id = new_form
+        current_bid.user_id = request.user
+        current_bid.save()
         return redirect ('/')
 
     else:
@@ -156,10 +201,14 @@ def create_list(request):
 def post(request, id):
     post = Post.objects.get(id=id)
     comments = comment.objects.filter(post_id=id)
-
+    currentbid = bid.objects.get(post_id=id)
+    
+    added = Watchlist.objects.filter(post_id = id, user_id = request.user)
     context = {
         'post' :post ,
-        'comments' :comments
+        'comments' :comments,
+        'currentbid' : currentbid,
+        'added':added
     }
 
     return render(request,'auctions/post.html',context)

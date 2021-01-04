@@ -19,7 +19,7 @@ class Post (models.Model):
     seller = models.CharField(max_length=50)
     starting_bid = models.IntegerField()
     def __str__(self):
-        return f"{self.title}&&{self.content}&{self.img}"
+        return f"{self.title}&{self.description}"
 
 
 
@@ -34,9 +34,10 @@ class comment (models.Model):
 class bid (models.Model):
     user_id = models.ForeignKey(User , on_delete=models.CASCADE )
     post_id = models.ForeignKey(Post , on_delete=models.CASCADE )
-    bid = models.IntegerField()
+    bid = models.IntegerField(default=0)
     created = models.DateTimeField(default=datetime.datetime.now())
-
+    def __str__(self):
+        return f"{self.bid}"
 
 class Watchlist(models.Model):
     user_id = models.ForeignKey(User , on_delete=models.CASCADE )
